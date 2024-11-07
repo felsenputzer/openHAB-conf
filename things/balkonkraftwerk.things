@@ -1,0 +1,64 @@
+Bridge mqtt:broker:e87028b792 "MQTT Broker" [host="192.168.188.53", secure=false, clientID="OH3_Inbuilt"]  
+{
+    Thing topic OpenDTU1 "OpenDTU" @ "Solaranlage" [availabilityTopic="solar/dtu/status", payloadAvailable="online", payloadNotAvailable="offline"]
+    {
+        Channels:
+        // Technical things
+        Type number : uptime					"OpenDTU uptime"		[stateTopic="solar/dtu/uptime"]
+        Type string : ip						"OpenDTU IP"			[stateTopic="solar/dtu/ip"]
+        Type number : rssi						"OpenDTU rssi"			[stateTopic="solar/dtu/rssi"]
+        // First inverter, serial: 114182956496
+        Type string : inv1_name					"Inverter name"			[stateTopic="solar/114182956496/name"]
+        // Main values
+        Type number : inv1_pow					"Total (AC) power"		[stateTopic="solar/114182956496/0/power"]
+        Type number : inv1_voltage				"I1 AC voltage"			[stateTopic="solar/114182956496/0/voltage"]
+        Type number : inv1_current				"I1 AC current"			[stateTopic="solar/114182956496/0/current"]
+        Type number : inv1_frequency			"I1 AC Frequency"		[stateTopic="solar/114182956496/0/frequency"]
+        Type number : inv1_efficiency			"I1 AC efficiency"		[stateTopic="solar/114182956496/0/efficiency"]
+        Type number : inv1_powerfactor			"I1 AC powerfactor"		[stateTopic="solar/114182956496/0/powerfactor"]
+        Type number : inv1_reactivepower		"I1 AC reactivepower"	[stateTopic="solar/114182956496/0/reactivepower"]
+        Type number : inv1_pow_dc				"DC Power (total)"		[stateTopic="solar/114182956496/0/powerdc"]
+        Type number : inv1_temp					"Inverter temperature"	[stateTopic="solar/114182956496/0/temperature"]
+        Type number : inv1_yieldday				"Yield day"				[stateTopic="solar/114182956496/0/yieldday"]
+        Type number : inv1_yieldtotal			"Yield total"			[stateTopic="solar/114182956496/0/yieldtotal"]
+        // Inverter 1 - String 1
+        Type number : inv1_s1_voltage			"I1 S1 voltage"			[stateTopic="solar/114182956496/1/voltage"]
+        Type number : inv1_s1_current			"I1 S1 current"			[stateTopic="solar/114182956496/1/current"]
+        Type number : inv1_s1_pow				"I1 S1 power"			[stateTopic="solar/114182956496/1/power"]
+        Type number : inv1_s1_yieldday			"I1 S1 yield day"		[stateTopic="solar/114182956496/1/yieldday"]
+        Type number : inv1_s1_yieldtotal		"I1 S1 yield total"		[stateTopic="solar/114182956496/1/yieldtotal"]
+        Type number : inv1_s1_irradiation		"I1 S1 irradiation"		[stateTopic="solar/114182956496/1/irradiation"]
+        // Inverter 1 - String 2
+        Type number : inv1_s2_voltage			"I1 S2 voltage"			[stateTopic="solar/114182956496/2/voltage"]
+        Type number : inv1_s2_current			"I1 S2 current"			[stateTopic="solar/114182956496/2/current"]
+        Type number : inv1_s2_pow				"I1 S2 power"			[stateTopic="solar/114182956496/2/power"]
+        Type number : inv1_s2_yieldday			"I1 S2 yield day"		[stateTopic="solar/114182956496/2/yieldday"]
+        Type number : inv1_s2_yieldtotal		"I1 S2 yield total"		[stateTopic="solar/114182956496/2/yieldtotal"]
+        Type number : inv1_s2_irradiation		"I1 S2 irradiation"		[stateTopic="solar/114182956496/2/irradiation"]
+        // Inverter 1 - String 3
+        Type number : inv1_s3_voltage			"I1 S3 voltage"			[stateTopic="solar/114182956496/3/voltage"]
+        Type number : inv1_s3_current			"I1 S3 current"			[stateTopic="solar/114182956496/3/current"]
+        Type number : inv1_s3_pow				"I1 S3 power"			[stateTopic="solar/114182956496/3/power"]
+        Type number : inv1_s3_yieldday			"I1 S3 yield day"		[stateTopic="solar/114182956496/3/yieldday"]
+        Type number : inv1_s3_yieldtotal		"I1 S3 yield total"		[stateTopic="solar/114182956496/3/yieldtotal"]
+        Type number : inv1_s3_irradiation		"I1 S3 irradiation"		[stateTopic="solar/114182956496/3/irradiation"]
+        // Inverter 1 - String 4
+        Type number : inv1_s4_voltage			"I1 S4 voltage"			[stateTopic="solar/114182956496/4/voltage"]
+        Type number : inv1_s4_current			"I1 S4 current"			[stateTopic="solar/114182956496/4/current"]
+        Type number : inv1_s4_pow				"I1 S4 power"			[stateTopic="solar/114182956496/4/power"]
+        Type number : inv1_s4_yieldday			"I1 S4 yield day"		[stateTopic="solar/114182956496/4/yieldday"]
+        Type number : inv1_s4_yieldtotal		"I1 S4 yield total"		[stateTopic="solar/114182956496/4/yieldtotal"]
+        Type number : inv1_s4_irradiation		"I1 S4 irradiation"		[stateTopic="solar/114182956496/4/irradiation"]
+        // Inverter info
+        Type number : inv1_bl_version			"I1 bootloader version"	[stateTopic="solar/114182956496/device/bootloaderversion"]
+        Type number : inv1_fw_build_version		"I1 firmware version"	[stateTopic="solar/114182956496/device/fwbuildversion"]
+        Type datetime : inv1_fw_build_datetime	"I1 fw build datetime"	[stateTopic="solar/114182956496/device/fwbuilddatetime"]
+        Type number : inv1_hw_partnumber		"I1 hw part number"		[stateTopic="solar/114182956496/device/hwpartnumber"]
+        Type number : inv1_hw_version			"I1 hw version"			[stateTopic="solar/114182956496/device/hwversion"]
+        // Settings
+        Type number : inv1_limit_np				"Inverter limit nonpersistent"		[commandTopic="solar/114182956496/cmd/limit_nonpersistent_absolute"]
+		Type string : inv1_limit				"Inverter limit"		[stateTopic="solar/114182956496/status/limit_absolute"]
+        Type number : inv1_restart				"Inverter Restart"		[commandTopic="solar/114182956496/cmd/restart"]
+        Type number : inv1_enable				"Inverter Enable"		[commandTopic="solar/114182956496/cmd/power"]
+    }
+}

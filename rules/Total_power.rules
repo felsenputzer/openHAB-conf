@@ -1,0 +1,28 @@
+rule "Calculate Total Power"
+when
+    Item shelly3em_Phase_U_Power received update or 
+    Item shelly3em_Phase_V_Power received update or
+    Item shelly3em_Phase_W_Power received update
+then
+    var pwr = (shelly3em_Phase_U_Power.state as DecimalType) + (shelly3em_Phase_V_Power.state as DecimalType) + (shelly3em_Phase_W_Power.state as DecimalType)
+    Total_Power.postUpdate(pwr)
+    Overall_Power.postUpdate(pwr + (OpenDTU1_inv1_pow.state as DecimalType))
+end 
+
+rule "Avg Power"
+when 
+    Time cron "0 0/1 * * * ? *"
+then
+    var avgpwr = Total_Power.averageSince(now.minusMinutes(1))
+    TotalPowerAvg.postUpdate(avgpwr as Number)
+end
+
+rule "Calculate Solar Power"
+when
+    Item Victron_west_panel_power received update or 
+    Item Victron_east_panel_power received update
+then
+    var pwr = (Victron_west_panel_power.state as DecimalType) + (Victron_east_panel_power.state as DecimalType)
+    Solar_power.postUpdate(pwr)
+    
+end 

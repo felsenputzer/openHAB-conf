@@ -1,0 +1,46 @@
+Bridge mqtt:broker:e87028b792 "MQTT Broker" [host="192.168.188.53", secure=false, clientID="OH3_Inbuilt"]  
+{
+    Thing topic BMS "BMS" @ "Solaranlage" [availabilityTopic="BMS/Alive", payloadAvailable="true", payloadNotAvailable="false"]
+    {
+        Channels:
+        // Technical things
+        Type string : ip						"BMS IP"			[stateTopic="BMS/Device_IP"]
+        Type number : rssi						"BMS rssi"			[stateTopic="BMS/Wifi_RSSI"]
+
+        // Main values
+        Type number : pack_voltage				"Pack Voltage"		    [stateTopic="BMS/Pack_Voltage"]
+        Type number : pack_current				"Pack Current"			[stateTopic="BMS/Pack_Current"]
+        Type number : pack_power				"Pack Power"			[stateTopic="BMS/Pack_Power"]
+        Type number : pack_SOC			        "Pack SOC"		        [stateTopic="BMS/Pack_SOC"]
+        Type number : pack_remaining_mAh		"Pack remaining mAh"	[stateTopic="BMS/Pack_Remaining_mAh"]
+        Type number : pack_cycles			    "Pack cycles"		    [stateTopic="BMS/Pack_Cycles"]
+        Type number : pack_temp		            "Pack Temp"	            [stateTopic="BMS/Pack_Cell_Temperature_1"]
+        Type number : pack_cell_high			"Pack Cell high"		[stateTopic="BMS/Pack_Cell_High"]
+        Type number : pack_cell_low				"Pack Cell low"         [stateTopic="BMS/Pack_Cell_Low"]
+        Type number : pack_cell_high_voltage	"Pack Cell high voltage"[stateTopic="BMS/Pack_Cell_High_Voltage"]
+        Type number : pack_cell_low_voltage		"Pack Cell low voltage"	[stateTopic="BMS/Pack_Cell_Low_Voltage"]
+        Type number : pack_cell_difference		"Pack Cell difference"	[stateTopic="BMS/Pack_Cell_Difference"]
+        Type string : pack_charge_FET			"Pack Charge FET"		[stateTopic="BMS/Pack_ChargeFET"]
+        Type string : pack_discharge_FET		"Pack Discharge FET"	[stateTopic="BMS/Pack_DischargeFET"]
+        Type string : pack_status			    "Pack Status"		    [stateTopic="BMS/Pack_Status"]
+        Type number : pack_cells		        "Pack Cells"		    [stateTopic="BMS/Pack_Cells"]
+        Type number : pack_cell_voltage_01		"Pack Cell Voltage 01"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_1"]
+        Type number : pack_cell_voltage_02		"Pack Cell Voltage 02"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_2"]
+        Type number : pack_cell_voltage_03		"Pack Cell Voltage 03"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_3"]
+        Type number : pack_cell_voltage_04		"Pack Cell Voltage 04"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_4"]
+        Type number : pack_cell_voltage_05		"Pack Cell Voltage 05"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_5"]
+        Type number : pack_cell_voltage_06		"Pack Cell Voltage 06"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_6"]
+        Type number : pack_cell_voltage_07		"Pack Cell Voltage 07"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_7"]
+        Type number : pack_cell_voltage_08		"Pack Cell Voltage 08"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_8"]
+        Type number : pack_cell_voltage_09		"Pack Cell Voltage 09"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_9"]
+        Type number : pack_cell_voltage_10		"Pack Cell Voltage 10"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_10"]
+        Type number : pack_cell_voltage_11		"Pack Cell Voltage 11"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_11"]
+        Type number : pack_cell_voltage_12		"Pack Cell Voltage 12"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_12"]
+        Type number : pack_cell_voltage_13		"Pack Cell Voltage 13"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_13"]
+        Type number : pack_cell_voltage_14		"Pack Cell Voltage 14"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_14"]
+        Type number : pack_cell_voltage_15		"Pack Cell Voltage 15"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_15"]
+        Type number : pack_cell_voltage_16		"Pack Cell Voltage 16"	[stateTopic="BMS/Pack_Cells_Voltage/Cell_16"]
+        Type string : pack_balance_active		"Pack Balance active "	[stateTopic="BMS/Pack_Balance_Active"]
+        Type number : calibrate_SOC             "Calibrate PAC SOC"     [commandTopic="BMS/Device_Control/Pack_SOC"]
+    }
+}

@@ -1,0 +1,219 @@
+rule "Telegramm Handler"
+when
+    Channel "telegram:telegramBot:32ae44f7af:messageEvent" triggered 
+then    
+    val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+    Thread::sleep(1000)
+    switch(TelegramBot_Text_der_letzten_Nachricht.state.toString.split(' ').get(0))
+    {
+        case "Silvia":{
+        telegramAction.sendTelegramQuery("Kaffemaschine:", "Reply_Telegram_Kaffee", "EIN", "AUS")
+        }
+        case "Dachfenster":{
+        telegramAction.sendTelegramQuery("Dachfenster:", "Reply_Telegram_Dach", "Auf", "Zu")
+        }
+        case "Lüftung":{
+        telegramAction.sendTelegramQuery("Lüftung:", "Reply_Telegram_Lueftung", "An", "Aus")
+        }
+        case "Kellerautomatik":{
+        telegramAction.sendTelegramQuery("Kellerautomatik:", "Reply_Telegram_Kellerautomatik", "An", "Aus")
+        }
+        case "Regen":{
+        telegramAction.sendTelegramQuery("Regnet es?", "Regen", "Ja", "Nein")
+        }
+        case "Heimspeicher":{
+        telegramAction.sendTelegramQuery("Versetze den Heimspeicher in Zustand:", "Heimspeicher", "Ein", "Aus")
+        }
+        case "Help":{
+        telegramAction.sendTelegram("Folgende Befehle werden unterstützt:\n\n*Silvia*: Kaffemschinensteuerung\n*Lüftung*: Kellergrbläse Steuerung\n*Dachfenster*: Dachfenster Steuerung\n*Kellerautomatik*: Automatisierung von Dachfenster und Lüftung in abh. der Umgebungsbedingungen.\n*Report*: Statusreport\n*Regen*: Globales Regen Flag für verschiedene Automatiken setzen.\n*Heimspeicher*: Steuerung des Akkusystems und Balkonkraftwerk.\n*Kaffeeautomatik: *automatisches Einschalten der Kaffemschine am Morgen.\n*Lüftungserinnerung: *Hilft im Sommer beim richtig Lüften.\n*Help: *Sendet eine Liste aller vorhandenen Befehle, aber ich denke das wusstest du schon... ")
+        }
+        case "Report":{
+        telegramAction.sendTelegramQuery("Welcher Report soll erstellt werden?:", "Report", "Strom", "Klima", "Übersicht") 
+        }
+        case "Lüftungserinnerung":{
+        telegramAction.sendTelegramQuery("Soll zu günstigen Lüftungszeitpunkten benarichtigt werde?", "Lüftungsreminder", "Ja", "Nein") 
+        }
+        case "Kaffeeautomatik":{
+        telegramAction.sendTelegramQuery("Soll zu Kaffeemaschine automatisch ein- und aus- geschaltet werden?", "Kaffeeautomatik", "Ja", "Nein") 
+        }
+        default:{
+        var String returnmessage = "Unbekannter Befehl: " + TelegramBot_Text_der_letzten_Nachricht.state.toString.split(' ').get(0)
+        telegramAction.sendTelegram(returnmessage)
+        }
+    }
+end
+
+rule "Telegramm Response Handler"
+when Channel "telegram:telegramBot:32ae44f7af:callbackEvent" triggered
+then
+val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+  Thread::sleep(1000)
+  switch(TelegramBot_AntwortId.state.toString){
+    case "Reply_Telegram_Dach":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Zu"){
+        var count = 15
+        Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(ON)
+        while(count > 0)
+        {
+          Thread::sleep(1000)
+          count--
+        }
+        Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(OFF)
+        telegramAction.sendTelegram("Dachfenster wird geschlossen.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Auf"){
+        var count = 15
+        Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(ON)
+        while(count > 0)
+        {
+          Thread::sleep(1000)
+          count--
+        }
+        Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(OFF)
+        telegramAction.sendTelegram("Dachfenster wird geöffnet.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Dachfenster.")
+      }
+    }
+    case "Reply_Telegram_Kaffee":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "EIN"){
+        var helper = shelly3em_Phase_W_Power.state as DecimalType
+        Kaffeemaschine.sendCommand(ON)
+        Thread::sleep(5000)
+        var PowerDiff = shelly3em_Phase_W_Power.state as DecimalType - helper
+        var String returnmessage = "Kaffeemaschine ist an. Anstieg Phase W: " + PowerDiff.toString + " W."
+        telegramAction.sendTelegram(returnmessage)
+      }
+      else{
+        Kaffeemaschine.sendCommand(OFF)
+        var String returnmessage = "Kaffeemaschine ist aus."
+        telegramAction.sendTelegram(returnmessage)
+      }
+    }
+    case "Reply_Telegram_Lueftung":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "An"){
+        Fan_ShellyPlus_1_Betrieb.sendCommand(ON)
+        telegramAction.sendTelegram("Gebläse aktiviert.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Aus"){
+        Fan_ShellyPlus_1_Betrieb.sendCommand(OFF)
+        telegramAction.sendTelegram("Gebläse deaktiviert.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Lüftung.")
+      }
+    }
+    case "Reply_Telegram_Kellerautomatik":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "An"){
+        Lueftungsautomatik.sendCommand(ON)
+        telegramAction.sendTelegram("Automatik aktiviert.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Aus"){
+        Lueftungsautomatik.sendCommand(OFF)
+        telegramAction.sendTelegram("Automatik deaktiviert.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Automatik.")
+      }
+    }
+    case "Regen":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Ja"){
+        Raining.sendCommand(ON)
+        telegramAction.sendTelegram("Regenprotokoll aktiviert.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Nein"){
+        Raining.sendCommand(OFF)
+        telegramAction.sendTelegram("Regenprotokoll deaktiviert.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Automatik.")
+      }
+    }
+    case "Heimspeicher":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Ein"){
+        EnableInverter.sendCommand(ON)
+        telegramAction.sendTelegram("Heimspeicher ein.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Aus"){
+        EnableInverter.sendCommand(OFF)
+        telegramAction.sendTelegram("Heimspeicher aus.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Ignore"){
+        telegramAction.sendTelegram("OK")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Automatik.")
+      }
+    }
+    case "Lüftungserinnerung":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Ja"){
+        LueftungsReminderEnable.sendCommand(ON)
+        telegramAction.sendTelegram("Benachrichtigungen aktiviert.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Nein"){
+        LueftungsReminderEnable.sendCommand(OFF)
+        telegramAction.sendTelegram("Benachrichtigungen deaktiviert.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Automatik.")
+      }
+    }
+    case "Kaffeeautomatik":{
+      if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Ja"){
+        KaffeeAutomatikEnable.sendCommand(ON)
+        telegramAction.sendTelegram("Automatik für Kaffeemaschine ein.")
+      }
+      else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Nein"){
+        KaffeeAutomatikEnable.sendCommand(OFF)
+        telegramAction.sendTelegram("Automatik für Kaffeemaschine aus.")
+      }
+      else {
+        telegramAction.sendTelegram("Unbekannter Befehl in Automatik.")
+      }
+    }
+    case "Report":{
+        if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Strom"){
+            var String returnmessage = "Statusreport: " + ZonedDateTime.now().toLocalDateTime().toString + "\n\n" + "*Strom*\nAktueller Stromverbrauch: " + ((Total_Power.state as Number) + (OpenDTU1_inv1_pow.state as Number)).toString +" W\ndavon Netzbezug: " + (Total_Power.state as Number).toString + "\n"
+            returnmessage = returnmessage + "\n*Heimspeicher*\nSolar West: " + (Victron_west_panel_power.state as Number).toString + " W\nSpannung: " + (BMS_pack_voltage.state as Number).toString + " V\nSOC: " + String::format("%.2f", (Battery_SOC.state as DecimalType).floatValue()) + "\nLast: " + (OpenDTU1_inv1_pow.state as Number).toString + "\nStatus: " + Battery_state.state.toString
+            returnmessage = returnmessage + "\n\n*Erträge*\nHeute: " + String::format("%.2f", (daily_yield.state as DecimalType).floatValue()) + " kWh\nMonat: " + String::format("%.2f", (monthly_yield.state as DecimalType).floatValue()) + " kWh\nGesamt: " + String::format("%.2f", (overall_yield.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + " kWh\n\n*Ersparnis*\nHeute: " + String::format("%.2f", (daily_saving.state as DecimalType).floatValue()) + " €\nMonat: " + String::format("%.2f", (monthly_saving.state as DecimalType).floatValue()) + " €\nGesamt: " + String::format("%.2f", (overall_saving.state as DecimalType).floatValue()) + " €"
+            telegramAction.sendTelegram(returnmessage)
+        }
+        else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Klima"){
+            var String returnmessage = "Statusreport: " + ZonedDateTime.now().toLocalDateTime().toString
+            returnmessage = returnmessage + String::format("\n\n*Klima\nKeller:*          %.1f °C | %.1f %%%%\n",(RHT_Sensors_keller_temp.state as DecimalType).floatValue(), (RHT_Sensors_keller_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*EG:*               %.1f °C | %.1f %%%%\n",(RHT_Sensors_wohnzimmer_temp.state as DecimalType).floatValue(), (RHT_Sensors_wohnzimmer_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Küche:*          %.1f °C | %.1f %%%%\n",(RHT_Sensors_kitchen_temp.state as DecimalType).floatValue(), (RHT_Sensors_kitchen_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Bad:*              %.1f °C | %.1f %%%%\n",(RHT_Sensors_bad_temp.state as DecimalType).floatValue(), (RHT_Sensors_bad_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*OG:*               %.1f °C | %.1f %%%%\n",(RHT_Sensors_OG_temp.state as DecimalType).floatValue(), (RHT_Sensors_OG_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Werkstatt:*   %.1f °C | %.1f %%%%\n",(RHT_Sensors_werkstatt_temp.state as DecimalType).floatValue(), (RHT_Sensors_werkstatt_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*Außen:*         %.1f °C | %.1f %%%%\n",(RHT_Sensors_hof_temp.state as DecimalType).floatValue(), (RHT_Sensors_hof_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("\n*Lüftung*\nFeuchte Diff: %.2f g/m3\n", (abs_water_diff.state as DecimalType).floatValue()) + "Gebläse: " + Fan_ShellyPlus_1_Betrieb.state.toString + "\nDachfenster: " + Shelly_Window_Open_State.state.toString + "\nAutomatik: " + Lueftungsautomatik.state.toString + "\nModus: " + Lueftungsautomatik_State.state.toString + "\n"
+            telegramAction.sendTelegram(returnmessage)  
+        } 
+        else if(TelegramBot_Text_der_letzten_Nachricht.state.toString == "Übersicht"){
+            var String returnmessage = "Statusreport: " + ZonedDateTime.now().toLocalDateTime().toString + "\n\n" + "*Strom*\nAktueller Stromverbrauch: " + ((Total_Power.state as Number) + (OpenDTU1_inv1_pow.state as Number)).toString +" W\ndavon Netzbezug: " + (Total_Power.state as Number).toString + "\n"
+            returnmessage = returnmessage + "\n*Heimspeicher*\nSolar West: " + (Victron_west_panel_power.state as Number).toString + " W\nSpannung: " + (BMS_pack_voltage.state as Number).toString + " V\nSOC: " + String::format("%.2f", (Battery_SOC.state as DecimalType).floatValue()) + "\nLast: " + (OpenDTU1_inv1_pow.state as Number).toString + "\nStatus: " + Battery_state.state.toString
+            returnmessage = returnmessage + "\n\n*Erträge*\nHeute: " + String::format("%.2f", (daily_yield.state as DecimalType).floatValue()) + " kWh\nMonat: " + String::format("%.2f", (monthly_yield.state as DecimalType).floatValue()) + " kWh\nGesamt: " + String::format("%.2f", (overall_yield.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + " kWh\n\n*Ersparnis*\nHeute: " + String::format("%.2f", (daily_saving.state as DecimalType).floatValue()) + " €\nMonat: " + String::format("%.2f", (monthly_saving.state as DecimalType).floatValue()) + " €\nGesamt: " + String::format("%.2f", (overall_saving.state as DecimalType).floatValue()) + " €"
+            returnmessage = returnmessage + String::format("\n\n*Klima\nKeller:*          %.1f °C | %.1f %%%%\n",(RHT_Sensors_keller_temp.state as DecimalType).floatValue(), (RHT_Sensors_keller_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*EG:*               %.1f °C | %.1f %%%%\n",(RHT_Sensors_wohnzimmer_temp.state as DecimalType).floatValue(), (RHT_Sensors_wohnzimmer_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Küche:*          %.1f °C | %.1f %%%%\n",(RHT_Sensors_kitchen_temp.state as DecimalType).floatValue(), (RHT_Sensors_kitchen_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Bad:*              %.1f °C | %.1f %%%%\n",(RHT_Sensors_bad_temp.state as DecimalType).floatValue(), (RHT_Sensors_bad_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*OG:*               %.1f °C | %.1f %%%%\n",(RHT_Sensors_OG_temp.state as DecimalType).floatValue(), (RHT_Sensors_OG_hum.state as DecimalType).floatValue())
+            returnmessage = returnmessage + String::format("*Werkstatt:*   %.1f °C | %.1f %%%%\n",(RHT_Sensors_werkstatt_temp.state as DecimalType).floatValue(), (RHT_Sensors_werkstatt_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("*Außen:*         %.1f °C | %.1f %%%%\n",(RHT_Sensors_hof_temp.state as DecimalType).floatValue(), (RHT_Sensors_hof_hum.state as DecimalType).floatValue()) 
+            returnmessage = returnmessage + String::format("\n*Lüftung*\nFeuchte Diff: %.2f g/m3\n", (abs_water_diff.state as DecimalType).floatValue()) + "Gebläse: " + Fan_ShellyPlus_1_Betrieb.state.toString + "\nDachfenster: " + Shelly_Window_Open_State.state.toString + "\nAutomatik: " + Lueftungsautomatik.state.toString + "\nModus: " + Lueftungsautomatik_State.state.toString + "\n"
+            telegramAction.sendTelegram(returnmessage)  
+        }
+        else {
+            telegramAction.sendTelegram("Unbekannter Report Request.")
+        }
+    }
+    default:{ 
+      var String returnmessage = "Unbekannte Antwort ID: " + TelegramBot_Text_der_letzten_Nachricht.state.toString.split(' ').get(0)
+      telegramAction.sendTelegram(returnmessage)
+    }
+}
+end

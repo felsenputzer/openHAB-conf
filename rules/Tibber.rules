@@ -1,0 +1,28 @@
+rule "Tibber Price"
+when 
+    Item TibberAPICurrentLevel changed
+then
+    val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+    var text_helper = ""
+    if(((TibberAPICurrentLevel.state == "VERY_EXPENSIVE") || (TibberAPICurrentLevel.state == "EXPENSIVE")) && (EnableInverter.state == OFF))
+    {
+        EnableInverter.sendCommand(ON)
+        text_helper = "Strompreislevel ist " + TibberAPICurrentLevel.state + " und liegt nun bei " + TibberAPICurrentTotal.state.toString + " ct. Der Heimspeicher wurde automatisch aktiviert."
+        //text_helper = "Strompreislevel ist " + TibberAPICurrentLevel.state + " und liegt nun bei " + TibberAPICurrentTotal.state.toString + " ct. Der Heimspeicher ist "+EnableInverter.state.toString + ". Soll der Zustand geändert werden?"
+        //telegramAction.sendTelegramQuery(text_helper, "Heimspeicher", "Ein", "Aus", "Ignore")
+        telegramAction.sendTelegram(text_helper)
+    }
+    else if(((TibberAPICurrentLevel.state == "VERY_CHEAP") || (TibberAPICurrentLevel.state == "CHEAP")) && (EnableInverter.state == ON))
+    {
+        EnableInverter.sendCommand(OFF)
+        text_helper = "Strompreislevel ist " + TibberAPICurrentLevel.state + " und liegt nun bei " + TibberAPICurrentTotal.state.toString + " ct. Der Heimspeicher wurde automatisch deaktiviert."
+        telegramAction.sendTelegram(text_helper)
+        //text_helper = "Strompreislevel ist " + TibberAPICurrentLevel.state + " und liegt nun bei " + TibberAPICurrentTotal.state.toString + " ct. Der Heimspeicher ist "+EnableInverter.state.toString + ". Soll der Zustand geändert werden?"
+        //telegramAction.sendTelegramQuery(text_helper, "Heimspeicher", "Ein", "Aus", "Ignore")
+    }
+    else
+    {
+        text_helper = "Strompreislevel ist " + TibberAPICurrentLevel.state + " und liegt nun bei " + TibberAPICurrentTotal.state.toString + " ct. Der Heimspeicher ist "+EnableInverter.state.toString + ". Soll der Zustand geändert werden?"
+        telegramAction.sendTelegramQuery(text_helper, "Heimspeicher", "Ein", "Aus", "Ignore")
+    }
+end

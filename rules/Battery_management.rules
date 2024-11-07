@@ -1,0 +1,162 @@
+rule "Calibrate SoC"
+when
+    Item Victron_West_operation_state changed to "Float"
+then
+    BMS_update_SOC.postUpdate(100.0)
+end
+
+rule "BMS_Balance"
+when
+    Item BMS_pack_balance_active changed
+then
+    if( BMS_pack_balance_active.state == "true" ) {
+        BMS_pack_balance_active_nmb.postUpdate(1)
+    }else if(BMS_pack_balance_active.state == "false") {
+        BMS_pack_balance_active_nmb.postUpdate(0)
+    }
+end
+
+rule "Battery Management"
+when
+    Item EnableInverter changed or 
+    Item Battery_update_trigger received command ON
+    //Time cron "0 0/1 * * * ? *"
+then
+    var Number v_Inv_Voltage = (BMS_pack_voltage.state as Number)
+    var Number v_Bat_min = (Battery_voltage_min.state as Number)
+    var Number v_Bat_max = (Battery_voltage_max.state as Number)
+    var Number v_Cell_min_Voltage = (BMS_pack_cell_low_voltage.state as Number)
+    var Number v_Cell_min = 2.9
+    var Number v_Cell_max_Voltage = (BMS_pack_cell_high_voltage.state as Number)
+    var Number v_Cell_max = 3.65
+    var Number help = 0
+    var Number v_Bat_hysteresis = (Battery_hysteresis.state as Number)
+    var String v_Bat_state = Battery_state.state.toString()
+    var Number v_deraiting = Math::min((300.0 * (v_Inv_Voltage - v_Bat_min) + 50),600.0)
+    Derating.postUpdate(v_deraiting)
+    if(EnableInverter.state == ON)
+    {   
+        if((v_Bat_state == "Aus") || (v_Bat_state == "Restart"))
+        {
+            OpenDTU1_inv1_enable.sendCommand(1)
+            Battery_state.postUpdate("Normal")
+        }
+        if((v_Inv_Voltage < v_Bat_min) || (v_Cell_min_Voltage < v_Cell_min))
+        {
+            if(v_Bat_state != "Empty")
+            {
+                Battery_state.postUpdate("Empty")
+                OpenDTU1_inv1_enable.sendCommand(0)
+            }
+        }
+        else if((v_Inv_Voltage > v_Bat_max) || (v_Cell_max_Voltage > v_Cell_max))
+        {
+            if(v_Bat_state != "Full")
+            {
+                Battery_state.postUpdate("Full")
+            }
+            help = (Total_Power.state as Number) + (OpenDTU1_inv1_limit.state as Number)
+            if(help < (Solar_power.state as Number))
+            {
+                help = (Solar_power.state as Number)
+            }
+            //OpenDTU1_inv1_limit_nonpersistent.sendCommand(help)
+            OpenDTU1_inv1_limit_nonpersistent.sendCommand(600)
+            
+        }
+        else if (((v_Inv_Voltage > (v_Bat_min + v_Bat_hysteresis)) && (v_Inv_Voltage < (v_Bat_max - v_Bat_hysteresis))) || (v_Bat_state == "Normal"))
+        {
+            if(v_Bat_state != "Normal")
+            {
+				OpenDTU1_inv1_enable.sendCommand(1)
+                Battery_state.postUpdate("Normal")
+            }
+            help = (Total_Power.state as Number) + (OpenDTU1_inv1_limit.state as Number)
+            if(help > v_deraiting)
+            {
+                help = v_deraiting
+            }
+            OpenDTU1_inv1_limit_nonpersistent.sendCommand(help)
+        }   
+    }else
+    {
+        if(v_Bat_state != "Aus")
+        {
+            Battery_state.postUpdate("Aus")
+            OpenDTU1_inv1_limit_nonpersistent.sendCommand(10.0)
+            OpenDTU1_inv1_enable.sendCommand(0)
+        }  
+    }
+    Battery_update_trigger.sendCommand(OFF)
+end 
+
+rule "Battery Yield"
+when
+    Time cron "0 59 * * * ? *"
+then
+    var Number v_yield_now = OpenDTU1_inv1_yieldday.state as Number
+    var Number v_yield_last = OpenDTU1_inv1_yieldday_last.state as Number
+    var Number v_yield_diff = v_yield_now - v_yield_last
+    var Number v_saved_today = daily_saving.state as Number
+    var Number v_yield_today = daily_yield.state as Number
+    
+    daily_saving.postUpdate(v_saved_today + ((v_yield_diff / 1000) * (TibberAPICurrentTotal.state as Number)))
+    daily_yield.postUpdate(v_yield_today + (v_yield_diff / 1000))
+    if(ZonedDateTime.now().getHour() == 23)
+    {
+        OpenDTU1_inv1_yieldday_last.postUpdate(0)
+        OpenDTU1_inv1_yieldday_track.postUpdate(v_yield_now / 1000)
+        var Number v_monthly_saving = monthly_saving.state as Number
+        var Number v_monthly_yield = monthly_yield.state as Number
+        monthly_saving.postUpdate(v_monthly_saving + (daily_saving.state as Number))
+        monthly_yield.postUpdate(v_monthly_yield + (daily_yield.state as Number))
+        daily_yield.postUpdate(0)
+        daily_saving.postUpdate(0)
+        Battery_state.postUpdate("Restart")
+        OpenDTU1_inv1_restart.sendCommand(1)
+    }
+    else
+    {
+        OpenDTU1_inv1_yieldday_last.postUpdate(v_yield_now)
+    }
+end
+
+rule "Monthly Yield"
+when
+    Time cron "0 1 0 1 * ? *"
+then
+    var Number v_monthly_saving = (monthly_saving.state as Number)
+    var Number v_monthly_yield = (monthly_yield.state as Number)
+    var Number v_overall_saving = (overall_saving.state as Number)
+    var Number v_overall_yield = (overall_yield.state as Number)
+
+    monthly_saving_track.postUpdate(v_monthly_saving)
+    monthly_yield_track.postUpdate(v_monthly_yield)
+    overall_saving.postUpdate(v_overall_saving + v_monthly_saving)
+    overall_yield.postUpdate(v_overall_yield + v_monthly_yield)
+    monthly_saving.postUpdate(0)
+    monthly_yield.postUpdate(0)
+end
+
+rule "Battery Update Trigger"
+when
+    Time cron "0/10 * * * * ? *" or
+    Item EnableInverter changed
+then
+    if(EnableInverter.state == ON)
+    { 
+        var Number v_Total_Power = (Total_Power.state as Number)
+        var Number v_Rest_Last = (RestLast.state as Number)
+        var Number v_Rest_Last_windup = (RestLast_windup.state as Number) 
+
+        if((v_Total_Power > v_Rest_Last) || (v_Total_Power < -(v_Rest_Last)) || (v_Rest_Last_windup > v_Rest_Last))
+        {
+            Battery_update_trigger.sendCommand(ON)
+            RestLast_windup.postUpdate(0)
+        }
+        else
+        {
+            RestLast_windup.postUpdate(v_Rest_Last_windup + 5)
+        }   
+    }
+end

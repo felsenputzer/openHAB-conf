@@ -1,0 +1,20 @@
+Group       Victron_east (Solaranlage)
+String      Victron_east_esp_data			    "Victron east ESP Data"                     (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:esp_data"}
+Number      Victron_east_rssi			        "Victron east RSSI"                         (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:rssi"}
+
+Number      Victron_east_battery_voltage		"Victron east Battery Voltage [%.2f V]"     (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:battery_voltage"}
+Number      Victron_east_battery_current		"Victron east Battery Current [%.2f A]"     (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:battery_current"}
+Number      Victron_east_panel_voltage			"Victron east Panel Voltage [%.2f V]"       (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:panel_voltage"}
+Number      Victron_east_panel_power			"Victron east Panel Power [%d W]"           (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:panel_power"}
+String      Victron_east_operation_state		"Victron east Operation State"              (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:operation_state"}
+String      Victron_east_tracker_state			"Victron east Tracker State"                (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:tracker_state"}
+String      Victron_east_off_reason			    "Victron east Off Reason"                   (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:off_reason"}
+String      Victron_east_current_error			"Victron east Current Error"                (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:current_error"}
+String      Victron_east_Load_output_state		"Victron east Load Output State"            (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:Load_output_state"}
+Number      Victron_east_Load_current			"Victron east Load Current"                 (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:Load_current"}
+Number      Victron_east_total_kWh			    "Victron east Total kWh [%d kWh]"           (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:total_kWh"}
+Number      Victron_east_today_kWh			    "Victron east Today kWh [%d kWh]"           (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:today_kWh"}
+Number      Victron_east_Max_pow_today			"Victron east Max Power Today [%d W]"       (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:Max_pow_today"}
+Number      Victron_east_yesterday_kWh			"Victron east Yesterday kWh [%d kWh]"       (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:yesterday_kWh"}
+Number      Victron_east_max_pow_yesterday		"Victron east Max Power Yesterday [%d W]"   (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:max_pow_yesterday"}
+Number      Victron_east_day			        "Victron east Day"                          (Victron_east)       {channel="mqtt:topic:e87028b792:Victron_east:day"}

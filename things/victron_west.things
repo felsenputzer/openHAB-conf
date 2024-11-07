@@ -1,0 +1,28 @@
+Bridge mqtt:broker:e87028b792 "MQTT Broker" [host="192.168.188.53", secure=false, clientID="OH3_Inbuilt"]  
+{
+    Thing topic Victron_west "Victron_west" @ "Solaranlage" [availabilityTopic="Victron_west/Alive", payloadAvailable="true", payloadNotAvailable="false"]
+    {
+        Channels:
+        // Technical things
+        Type string : esp_data					    "ESP Data"			[stateTopic="Victron_west/Device_IP"]
+        Type number : rssi						    "rssi"			    [stateTopic="Victron_west/Wifi_RSSI"]
+
+        // Main values
+        Type number : battery_voltage				"Battery Voltage"		        [stateTopic="Victron_west/Voltage"]
+        Type number : battery_current				"Battery Current"		        [stateTopic="Victron_west/Battery_current"]
+        Type number : panel_voltage				    "Panel Voltage"		            [stateTopic="Victron_west/Panel_voltage"]
+        Type number : panel_power				    "Panel Power"		            [stateTopic="Victron_west/Panel_power"]
+        Type string : operation_state				"Operation State"		        [stateTopic="Victron_west/Operation_state"]
+        Type string : tracker_state 				"Tracker State"		            [stateTopic="Victron_west/Tracker_operation_mode"]
+        Type string : off_reason    				"Off Reason"		            [stateTopic="Victron_west/Off_reason"]
+        Type string : current_error 				"Current Error"		            [stateTopic="Victron_west/Current_error"]
+        Type string : Load_output_state				"Load Output State"		        [stateTopic="Victron_west/Load_output_state"]
+        Type number : Load_current				    "Load Current"		            [stateTopic="Victron_west/Load_current"]
+        Type number : total_kWh     				"Total kWh"		                [stateTopic="Victron_west/total_kWh"]
+        Type number : today_kWh     				"Today kWh"		                [stateTopic="Victron_west/today_kWh"]
+        Type number : Max_pow_today 				"Max Power Today"		        [stateTopic="Victron_west/Max_pow_today"]
+        Type number : yesterday_kWh				    "Yesterday kWh"		            [stateTopic="Victron_west/Yesterday_kWh"]
+        Type number : max_pow_yesterday				"Max Power Yesterday"		    [stateTopic="Victron_west/Max_pow_yesterday"]
+        Type number : day           				"Day"		                    [stateTopic="Victron_west/Day"]
+    }
+}

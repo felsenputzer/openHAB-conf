@@ -1,0 +1,39 @@
+Group       BMS                                                                 (Solaranlage)
+Group:Number       Batt_cell                                                           (Solaranlage)
+String      BMS_ip					    "BMS IP"                                (BMS)       {channel="mqtt:topic:e87028b792:BMS:ip"}
+Number      BMS_rssi                    "BMS rssi"                              (BMS)       {channel="mqtt:topic:e87028b792:BMS:rssi"}
+Number      BMS_pack_voltage			"BMS Pack Voltage [%.2f V]"		        (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_voltage"}
+Number      BMS_pack_current			"BMS Pack Current [%.2f A]"			    (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_current"}
+Number      BMS_pack_power				"BMS Pack Power [%d W]"			        (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_power"}
+Number      BMS_pack_SOC			    "BMS Pack SOC [%d %%]"		            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_SOC"}
+Number      BMS_pack_remaining_mAh		"BMS Pack remaining mAh [%d mAh]"	    (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_remaining_mAh"}
+Number      BMS_pack_cycles			    "BMS Pack cycles"		                (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cycles"}
+Number      BMS_pack_temp		        "BMS Pack Temp [%.1f °C]"	            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_temp"}
+Number      BMS_pack_cell_high			"BMS Pack Cell high"		            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_high"}
+Number      BMS_pack_cell_low			"BMS Pack Cell low"                     (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_low"}
+Number      BMS_pack_cell_high_voltage	"BMS Pack Cell high voltage [%.3f V]"   (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_high_voltage"}
+Number      BMS_pack_cell_low_voltage	"BMS Pack Cell low voltage [%.3f V]"	(BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_low_voltage"}
+Number      BMS_pack_cell_difference	"BMS Pack Cell difference [%d mV]"	    (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_difference"}
+String      BMS_pack_charge_FET			"BMS Pack Charge FET"		            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_charge_FET"}
+String      BMS_pack_discharge_FET		"BMS Pack Discharge FET"	            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_discharge_FET"}
+String      BMS_pack_status			    "BMS Pack Status"		                (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_status"}
+Number      BMS_pack_cells		        "BMS Pack Cells"		                (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_cells"}
+Number      BMS_pack_cell_voltage_01	"BMS Pack Cell Voltage 01 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_01"}
+Number      BMS_pack_cell_voltage_02	"BMS Pack Cell Voltage 02 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_02"}
+Number      BMS_pack_cell_voltage_03	"BMS Pack Cell Voltage 03 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_03"}
+Number      BMS_pack_cell_voltage_04	"BMS Pack Cell Voltage 04 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_04"}
+Number      BMS_pack_cell_voltage_05	"BMS Pack Cell Voltage 05 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_05"}
+Number      BMS_pack_cell_voltage_06	"BMS Pack Cell Voltage 06 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_06"}
+Number      BMS_pack_cell_voltage_07	"BMS Pack Cell Voltage 07 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_07"}
+Number      BMS_pack_cell_voltage_08	"BMS Pack Cell Voltage 08 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_08"}
+Number      BMS_pack_cell_voltage_09	"BMS Pack Cell Voltage 09 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_09"}
+Number      BMS_pack_cell_voltage_10	"BMS Pack Cell Voltage 10 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_10"}
+Number      BMS_pack_cell_voltage_11	"BMS Pack Cell Voltage 11 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_11"}
+Number      BMS_pack_cell_voltage_12	"BMS Pack Cell Voltage 12 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_12"}
+Number      BMS_pack_cell_voltage_13	"BMS Pack Cell Voltage 13 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_13"}
+Number      BMS_pack_cell_voltage_14	"BMS Pack Cell Voltage 14 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_14"}
+Number      BMS_pack_cell_voltage_15	"BMS Pack Cell Voltage 15 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_15"}
+Number      BMS_pack_cell_voltage_16	"BMS Pack Cell Voltage 16 [%.3f V]"	    (BMS,Batt_cell)       {channel="mqtt:topic:e87028b792:BMS:pack_cell_voltage_16"}
+String      BMS_pack_balance_active		"BMS Pack Balance active"	            (BMS)       {channel="mqtt:topic:e87028b792:BMS:pack_balance_active"}
+Number      BMS_update_SOC              "BMS Update SOC"                        (BMS)       {channel="mqtt:topic:e87028b792:BMS:Device_Control:Pack_SOC"}
+Number      BMS_pack_balance_active_nmb "BMS Pack Balance active number"        (BMS)
