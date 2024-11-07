@@ -1,0 +1,115 @@
+rule "Lueftungs Overwrite"
+when 
+    Item Roofwindow_ShellyPlus_2_EingangTaste_1 changed to ON or
+    Item Roofwindow_ShellyPlus_2_EingangTaste_2 changed to ON
+then
+    if(Lueftungsautomatik.state == ON){
+        val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+        telegramAction.sendTelegram("Lüftungssteuerung wurde durch manuellen Overwrite deaktiviert.")
+        Lueftungsautomatik.sendCommand(OFF)
+    }
+end
+
+rule "Lueftungs Reminder"
+when 
+    Time cron "0 0/10 * * * ? *"
+then
+    if(LueftungsReminderEnable.state == ON){
+        val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+        if((((RHT_Sensors_OG_temp.state as Number) - (RHT_Sensors_hof_temp.state as Number)) > 1)&&(LueftungsReminderState.state == OFF))
+        {
+            telegramAction.sendTelegram("Jetzt wäre ein guter Zeitpunkt zum Lüften.")
+            LueftungsReminderState.postUpdate(ON)
+        }
+        else if((((RHT_Sensors_OG_temp.state as Number) - (RHT_Sensors_hof_temp.state as Number)) < 0)&&(LueftungsReminderState.state == ON))
+        {
+            telegramAction.sendTelegram("Besser schnell die Fenster zu, es wird warm.")
+            LueftungsReminderState.postUpdate(OFF)
+        }
+    }
+end
+
+rule "Lueftungssteuerung"
+when 
+    Time cron "0 0/15 * * * ? *" or
+    Item Raining changed
+then
+    if(Lueftungsautomatik.state == ON){
+        if(Raining.state == ON)
+        {
+            if(Lueftungsautomatik_State.state != "Regen")
+            {
+                Lueftungsautomatik_State.postUpdate("Regen")
+                Fan_ShellyPlus_1_Betrieb.sendCommand(OFF)
+                Lueftung_state.postUpdate(OFF)
+                var count = 15
+                Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(ON)
+                while(count > 0)
+                {
+                    Thread::sleep(1000)
+                    count--
+                }
+                Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(OFF)
+            }
+
+            }
+            else if((((RHT_Sensors_keller_abs_water.state as Number) - (RHT_Sensors_hof_abs_water.state as Number)) > Lueftung_Hysterese.state as Number) && ((RHT_Sensors_werkstatt_temp.state as Number) > (8.0)))
+            {
+            if(Lueftungsautomatik_State.state != "Entfeuchten")
+            {  
+                abs_water_begin.postUpdate(RHT_Sensors_keller_abs_water.state as Number)
+                Lueftungsautomatik_State.postUpdate("Entfeuchten")
+                Fan_ShellyPlus_1_Betrieb.sendCommand(ON)
+                Lueftung_state.postUpdate(ON)
+                if(Shelly_Window_Open_State.state != "OPEN") {
+                var count = 15
+                Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(ON)
+                while(count > 0)
+                {
+                    Thread::sleep(1000)
+                    count--
+                }
+                Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(OFF)
+                }
+            }
+            }
+            else if(((RHT_Sensors_hof_temp.state as Number) - (RHT_Sensors_keller_temp.state as Number)) > 10)
+            {
+            if(Lueftungsautomatik_State.state != "Aufheizen")
+            {
+                Lueftungsautomatik_State.postUpdate("Aufheizen")
+                Fan_ShellyPlus_1_Betrieb.sendCommand(ON)
+                Lueftung_state.postUpdate(ON)
+                if(Shelly_Window_Open_State.state != "OPEN") {  
+                var count = 15
+                Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(ON)
+                while(count > 0)
+                {
+                    Thread::sleep(1000)
+                    count--
+                }
+                Roofwindow_ShellyPlus_2_Betrieb_1.sendCommand(OFF)
+                }
+            }
+            }
+            else if((((RHT_Sensors_keller_abs_water.state as Number) - (RHT_Sensors_hof_abs_water.state as Number)) < 0) || ((RHT_Sensors_werkstatt_temp.state as Number) < (6.0)))
+            {
+            if(Lueftungsautomatik_State.state != "Aus")
+            {
+                Lueftungsautomatik_State.postUpdate("Aus")
+                Fan_ShellyPlus_1_Betrieb.sendCommand(OFF)
+                Lueftung_state.postUpdate(OFF)
+                if(Shelly_Window_Open_State.state != "CLOSE") { 
+                var count = 15
+                Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(ON)
+                while(count > 0)
+                {
+                    Thread::sleep(1000)
+                    count--
+                }
+                Roofwindow_ShellyPlus_2_Betrieb_2.sendCommand(OFF)
+                }
+            }
+        }
+    }
+end

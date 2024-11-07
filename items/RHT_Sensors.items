@@ -1,0 +1,40 @@
+Group       RHT_Sensors 
+
+// Küche
+Number      RHT_Sensors_kitchen_temp		"RHT Sensors Küche Temperatur [%.1f °C]"	    (RHT_Sensors,Kueche)       {channel="mqtt:topic:e87028b792:RHT_Sensors:kitchen_temp"}
+Number      RHT_Sensors_kitchen_hum		    "RHT Sensors Küche Feuchte [%.1f %%]"		    (RHT_Sensors,Kueche)       {channel="mqtt:topic:e87028b792:RHT_Sensors:kitchen_hum"}
+Number      RHT_Sensors_kitchen_bat			"RHT Sensors Küche Batterie [%d %%]"		    (RHT_Sensors,Kueche)       {channel="mqtt:topic:e87028b792:RHT_Sensors:kitchen_bat"}
+Number      RHT_Sensors_kitchen_abs_water   "RHT Sensors Küche Wassergehalt [%.1f g]"       (RHT_Sensors,Kueche)
+// Keller
+Number      RHT_Sensors_keller_temp		    "RHT Sensors Keller Temperatur [%.1f °C]"	    (RHT_Sensors,Keller)       {channel="mqtt:topic:e87028b792:RHT_Sensors:keller_temp"}
+Number      RHT_Sensors_keller_hum		    "RHT Sensors Keller Feuchte [%.1f %%]"		    (RHT_Sensors,Keller)       {channel="mqtt:topic:e87028b792:RHT_Sensors:keller_hum"}
+Number      RHT_Sensors_keller_bat			"RHT Sensors Keller Batterie [%d %%]"		    (RHT_Sensors,Keller)       {channel="mqtt:topic:e87028b792:RHT_Sensors:keller_bat"}
+Number      RHT_Sensors_keller_abs_water    "RHT Sensors Keller Wassergehalt [%.1f g]"      (RHT_Sensors,Keller)
+// Bad
+Number      RHT_Sensors_bad_temp		    "RHT Sensors Bad Temperatur [%.1f °C]"	        (RHT_Sensors,Bad)       {channel="mqtt:topic:e87028b792:RHT_Sensors:bad_temp"}
+Number      RHT_Sensors_bad_hum		        "RHT Sensors Bad Feuchte [%.1f %%]"			    (RHT_Sensors,Bad)       {channel="mqtt:topic:e87028b792:RHT_Sensors:bad_hum"}
+Number      RHT_Sensors_bad_bat			    "RHT Sensors Bad Batterie [%d %%]"			    (RHT_Sensors,Bad)       {channel="mqtt:topic:e87028b792:RHT_Sensors:bad_bat"}
+Number      RHT_Sensors_bad_abs_water       "RHT Sensors Bad Wassergehalt [%.1f g]"         (RHT_Sensors,Bad)
+// Werkstatt
+Number      RHT_Sensors_werkstatt_temp		"RHT Sensors Werkstatt Temperatur [%.1f °C]"    (RHT_Sensors,Werkstatt)       {channel="mqtt:topic:e87028b792:RHT_Sensors:werkstatt_temp"}
+Number      RHT_Sensors_werkstatt_hum		"RHT Sensors Werkstatt Feuchte [%.1f %%]"	    (RHT_Sensors,Werkstatt)       {channel="mqtt:topic:e87028b792:RHT_Sensors:werkstatt_hum"}
+Number      RHT_Sensors_werkstatt_bat	    "RHT Sensors Werkstatt Batterie [%d %%]"	    (RHT_Sensors,Werkstatt)       {channel="mqtt:topic:e87028b792:RHT_Sensors:werkstatt_bat"}
+Number      RHT_Sensors_werkstatt_abs_water "RHT Sensors Werkstatt Wassergehalt [%.1f g]"   (RHT_Sensors,Werkstatt)
+// Wohnzimmer
+Number      RHT_Sensors_wohnzimmer_temp		"RHT Sensors Wohnzimmer Temperatur [%.1f °C]"   (RHT_Sensors,Wohnzimmer)       {channel="mqtt:topic:e87028b792:RHT_Sensors:wohnzimmer_temp"}
+Number      RHT_Sensors_wohnzimmer_hum		"RHT Sensors Wohnzimmer Feuchte [%.1f %%]"	    (RHT_Sensors,Wohnzimmer)       {channel="mqtt:topic:e87028b792:RHT_Sensors:wohnzimmer_hum"}
+Number      RHT_Sensors_wohnzimmer_bat		"RHT Sensors Wohnzimmer Batterie [%d %%]"		(RHT_Sensors,Wohnzimmer)       {channel="mqtt:topic:e87028b792:RHT_Sensors:wohnzimmer_bat"}
+Number      RHT_Sensors_wohnzimmer_abs_water   "RHT Sensors Wohnzimmer Wassergehalt [%.1f g]"       (RHT_Sensors,Wohnzimmer)
+// Obergeschoss
+Number      RHT_Sensors_OG_temp		        "RHT Sensors Obergeschoss Temperatur [%.1f °C]"	(RHT_Sensors,Obergeschoss)       {channel="mqtt:topic:e87028b792:RHT_Sensors:OG_temp"}
+Number      RHT_Sensors_OG_hum		        "RHT Sensors Obergeschoss Feuchte [%.1f %%]"	(RHT_Sensors,Obergeschoss)       {channel="mqtt:topic:e87028b792:RHT_Sensors:OG_hum"}
+Number      RHT_Sensors_OG_bat			    "RHT Sensors Obergeschoss Batterie [%d %%]"		(RHT_Sensors,Obergeschoss)       {channel="mqtt:topic:e87028b792:RHT_Sensors:OG_bat"}
+Number      RHT_Sensors_OG_abs_water        "RHT Sensors Obergeschoss Wassergehalt [%.1f g]"       (RHT_Sensors,Obergeschoss)
+// Hof
+Number      RHT_Sensors_hof_temp		    "RHT Sensors Hof Temperatur [%.1f °C]"	        (RHT_Sensors,Hof)       {channel="mqtt:topic:e87028b792:RHT_Sensors:hof_temp"}
+Number      RHT_Sensors_hof_hum		        "RHT Sensors Hof Feuchte [%.1f %%]"			    (RHT_Sensors,Hof)       {channel="mqtt:topic:e87028b792:RHT_Sensors:hof_hum"}
+Number      RHT_Sensors_hof_bat			    "RHT Sensors Hof Batterie [%d %%]"			    (RHT_Sensors,Hof)       {channel="mqtt:topic:e87028b792:RHT_Sensors:hof_bat"}
+Number      RHT_Sensors_hof_abs_water       "RHT Sensors Hof Wassergehalt [%.1f g]"         (RHT_Sensors,Hof)
+//Others
+Number      RHT_Sensors_bewegungsmelder_status  "RHT Sensors Bewegungsmelder Status"        (RHT_Sensors,Werkstatt)       {channel="mqtt:topic:e87028b792:RHT_Sensors:bewegungsmelder_occupancy"}
+Number      RHT_Sensors_bewegungsmelder_bat     "RHT Sensors Bewegungsmelder Batterie [%d %%]"  (RHT_Sensors,Werkstatt)   {channel="mqtt:topic:e87028b792:RHT_Sensors:bewegungsmelder_bat"}

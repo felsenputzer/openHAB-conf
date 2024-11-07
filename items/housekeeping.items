@@ -1,0 +1,3 @@
+Number Total_Power      "Total Power [%.0f W]"
+Number TotalPowerAvg    "Total Power Average [%.0f W]"
+Number Overall_Power    "Overall Power [%.0f W]"

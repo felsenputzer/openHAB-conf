@@ -1,0 +1,34 @@
+rule "Kaffeemaschine Sleep Wake"
+when 
+    Item Kaffeemaschine received command
+then
+    if(receivedCommand == ON)
+    {
+    executeCommandLine(Duration.ofSeconds(5),"/etc/openhab/scripts/wake.sh")
+    }
+    else if(receivedCommand == OFF)
+    {
+    executeCommandLine(Duration.ofSeconds(5),"/etc/openhab/scripts/sleep.sh")  
+    }
+end
+
+rule "Kaffeemaschine morning Wake"
+when
+    Time cron "0 0 7 * * * *"
+then
+    if(KaffeeAutomatikEnable.state == ON)
+    {
+        Kaffeemaschine.sendCommand(ON)
+    }
+    
+end
+
+rule "Kaffeemaschine always sleep"
+when
+    Time cron "0 0 1 * * * *"
+then
+    if(KaffeeAutomatikEnable.state == ON)
+    {
+        Kaffeemaschine.sendCommand(OFF)
+    }
+end

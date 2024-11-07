@@ -1,0 +1,38 @@
+rule "Update absolute water"
+when 
+    Time cron "0 0/10 * * * ? *"
+then
+{
+    var watersat = newArrayList(3.4,3.7,3.9,4.2,4.5,4.8,5.2,5.6,5.9,6.3,6.8,7.3,7.7,8.3,8.8,9.4,10.0,10.7,11.4,12.1,12.8,13.6,14.5,15.4,16.3,17.3,18.3,19.4,20.6,21.8,23,24.4,25.7,27.2,28.7,30.3)
+
+    var int pos = (RHT_Sensors_hof_temp.state as Number).intValue + 5
+    var helper = (watersat.get(pos) * RHT_Sensors_hof_hum.state as Number) / 100
+    RHT_Sensors_hof_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_bad_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_bad_hum.state as Number) / 100
+    RHT_Sensors_bad_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_keller_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_keller_hum.state as Number) / 100
+    RHT_Sensors_keller_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_OG_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_OG_hum.state as Number) / 100
+    RHT_Sensors_OG_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_wohnzimmer_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_wohnzimmer_hum.state as Number) / 100
+    RHT_Sensors_wohnzimmer_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_werkstatt_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_werkstatt_hum.state as Number) / 100
+    RHT_Sensors_werkstatt_abs_water.postUpdate(helper)
+
+    pos = (RHT_Sensors_kitchen_temp.state as Number).intValue + 5
+    helper = (watersat.get(pos) * RHT_Sensors_kitchen_hum.state as Number) / 100
+    RHT_Sensors_kitchen_abs_water.postUpdate(helper)
+    
+    abs_water_diff.postUpdate(RHT_Sensors_keller_abs_water.state as Number - RHT_Sensors_hof_abs_water.state as Number)
+}
+end

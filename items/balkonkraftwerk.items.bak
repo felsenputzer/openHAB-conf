@@ -1,0 +1,54 @@
+Group       OpenDTU
+Number      OpenDTU1_uptime					"OpenDTU1 uptime"                   (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:uptime"}
+String      OpenDTU1_ip						"OpenDTU1 IP"                       (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:ip"}
+Number      OpenDTU1_wifi_rssi				"OpenDTU1 WiFi RSSI"                (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:rssi"}
+// Inverters
+String      OpenDTU1_inv1_name				"OpenDTU1 inv1 name"                (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_name"}
+Number      OpenDTU1_inv1_pow				"OpenDTU1 inv1 power (AC)"          (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_pow"}
+Number      OpenDTU1_inv1_voltage			"OpenDTU1 inv1 voltage (AC)"        (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_voltage"}
+Number      OpenDTU1_inv1_current			"OpenDTU1 inv1 current (AC)"        (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_current"}
+Number      OpenDTU1_inv1_frequency			"OpenDTU1 inv1 frequency (AC)"      (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_frequency"}
+Number      OpenDTU1_inv1_efficiency		"OpenDTU1 inv1 efficiency (AC)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_efficiency"}
+Number      OpenDTU1_inv1_powerfactor		"OpenDTU1 inv1 powerfactor (AC)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_powerfactor"}
+Number      OpenDTU1_inv1_reactivepower		"OpenDTU1 inv1 reactivepower (AC)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_reactivepower"}
+Number      OpenDTU1_inv1_pow_dc			"OpenDTU1 inv1 power (DC)"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_pow_dc"}
+Number      OpenDTU1_inv1_temp				"OpenDTU1 inv1 temperature"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_temp"}
+Number      OpenDTU1_inv1_yieldday			"OpenDTU1 inv1 yield (day)"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_yieldday"}
+Number      OpenDTU1_inv1_yieldtotal		"OpenDTU1 inv1 yield (total)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_yieldtotal"}
+// String 1
+Number      OpenDTU1_inv1_s1_voltage		"OpenDTU1 inv1 s1 voltage"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_voltage"}
+Number      OpenDTU1_inv1_s1_current		"OpenDTU1 inv1 s1 current"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_current"}
+Number      OpenDTU1_inv1_s1_pow			"OpenDTU1 inv1 s1 power"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_pow"}
+Number      OpenDTU1_inv1_s1_yieldday		"OpenDTU1 inv1 s1 yield (day)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_yieldday"}
+Number      OpenDTU1_inv1_s1_yieldtotal		"OpenDTU1 inv1 s1 yield (total)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_yieldtotal"}
+Number      OpenDTU1_inv1_s1_irradiation	"OpenDTU1 inv1 s1 irradiation"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s1_irradiation"}
+// String 2
+Number      OpenDTU1_inv1_s2_voltage		"OpenDTU1 inv1 s2 voltage"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_voltage"}
+Number      OpenDTU1_inv1_s2_current		"OpenDTU1 inv1 s2 current"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_current"}
+Number      OpenDTU1_inv1_s2_pow			"OpenDTU1 inv1 s2 power"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_pow"}
+Number      OpenDTU1_inv1_s2_yieldday		"OpenDTU1 inv1 s2 yield (day)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_yieldday"}
+Number      OpenDTU1_inv1_s2_yieldtotal		"OpenDTU1 inv1 s2 yield (total)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_yieldtotal"}
+Number      OpenDTU1_inv1_s2_irradiation	"OpenDTU1 inv1 s2 irradiation"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s2_irradiation"}
+// String 3
+Number      OpenDTU1_inv1_s3_voltage		"OpenDTU1 inv1 s3 voltage"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_voltage"}
+Number      OpenDTU1_inv1_s3_current		"OpenDTU1 inv1 s3 current"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_current"}
+Number      OpenDTU1_inv1_s3_pow			"OpenDTU1 inv1 s3 power"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_pow"}
+Number      OpenDTU1_inv1_s3_yieldday		"OpenDTU1 inv1 s3 yield (day)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_yieldday"}
+Number      OpenDTU1_inv1_s3_yieldtotal		"OpenDTU1 inv1 s3 yield (total)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_yieldtotal"}
+Number      OpenDTU1_inv1_s3_irradiation	"OpenDTU1 inv1 s3 irradiation"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s3_irradiation"}
+// String 4
+Number      OpenDTU1_inv1_s4_voltage		"OpenDTU1 inv1 s4 voltage"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_voltage"}
+Number      OpenDTU1_inv1_s4_current		"OpenDTU1 inv1 s4 current"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_current"}
+Number      OpenDTU1_inv1_s4_pow			"OpenDTU1 inv1 s4 power"			(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_pow"}
+Number      OpenDTU1_inv1_s4_yieldday		"OpenDTU1 inv1 s4 yield (day)"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_yieldday"}
+Number      OpenDTU1_inv1_s4_yieldtotal		"OpenDTU1 inv1 s4 yield (total)"	(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_yieldtotal"}
+Number      OpenDTU1_inv1_s4_irradiation	"OpenDTU1 inv1 s4 irradiation"		(OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_s4_irradiation"}
+// Inverter info
+Number      OpenDTU1_inv1_bl_version		"OpenDTU1 inv1 bootloader version"  (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_bl_version"}
+Number      OpenDTU1_inv1_fw_build_version  "OpenDTU1 inv1 firmware version"    (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_fw_build_version"}
+DateTime    OpenDTU1_inv1_fw_build_datetime "OpenDTU1 inv1 fw build datetime"   (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_fw_build_datetime"}
+Number      OpenDTU1_inv1_hw_partnumber     "OpenDTU1 inv1 hardware partnumber" (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_hw_partnumber"}
+Number      OpenDTU1_inv1_hw_version        "OpenDTU1 inv1 hardware version"    (OpenDTU)       {channel="mqtt:topic:e87028b792:OpenDTU1:inv1_hw_version"}
+// Settings
+Number      OpenDTU1_inv1_limit				"OpenDTU1 inv1 limit"				(OpenDTU)		{channel="mqtt:topic:e87028b792:OpenDTU1:inv1_limit"}
+Number      OpenDTU1_inv1_limit_nonpersistent				"OpenDTU1 inv1 limit nonpersistent"				(OpenDTU)		{channel="mqtt:topic:e87028b792:OpenDTU1:inv1_limit_np"}

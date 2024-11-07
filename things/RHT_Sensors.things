@@ -1,0 +1,38 @@
+Bridge mqtt:broker:e87028b792 "MQTT Broker" [host="192.168.188.53", secure=false, clientID="OH3_Inbuilt"]  
+{
+    Thing topic RHT_Sensors "RHT_Sensors" [availabilityTopic="tele/tasmota_ZBBridge/LWT", payloadAvailable="Online", payloadNotAvailable="Offline"]
+    {
+        Channels:
+        // Küche
+        Type number : kitchen_temp			"Küche Temperatur"		    [stateTopic="tele/Sensors/Kueche/Temperature"]
+        Type number : kitchen_hum			"Küche Luftfeuchte"		    [stateTopic="tele/Sensors/Kueche/Humidity"]
+        Type number : kitchen_bat			"Küche Batterie"		    [stateTopic="tele/Sensors/Kueche/BatteryPercentage"]
+        // Keller
+        Type number : keller_temp			"Keller Temperatur"		    [stateTopic="tele/Sensors/Keller/Temperature"]
+        Type number : keller_hum			"Keller Luftfeuchte"	    [stateTopic="tele/Sensors/Keller/Humidity"]
+        Type number : keller_bat			"Keller Batterie"		    [stateTopic="tele/Sensors/Keller/BatteryPercentage"]
+        // Wohnzimmer
+        Type number : wohnzimmer_temp		"Wohnzimmer Temperatur"	    [stateTopic="tele/Sensors/Wohnzimmer/Temperature"]
+        Type number : wohnzimmer_hum		"Wohnzimmer Luftfeuchte"	[stateTopic="tele/Sensors/Wohnzimmer/Humidity"]
+        Type number : wohnzimmer_bat		"Wohnzimmer Batterie"		[stateTopic="tele/Sensors/Wohnzimmer/BatteryPercentage"]
+        // Obergeschoss
+        Type number : OG_temp			    "Obergeschoss Temperatur"	[stateTopic="tele/Sensors/OG/Temperature"]
+        Type number : OG_hum			    "Obergeschoss Luftfeuchte"	[stateTopic="tele/Sensors/OG/Humidity"]
+        Type number : OG_bat		    	"Obergeschoss Batterie"		[stateTopic="tele/Sensors/OG/BatteryPercentage"]
+        // Bad
+        Type number : bad_temp		    	"Bad Temperatur"		    [stateTopic="tele/Sensors/Bad/Temperature"]
+        Type number : bad_hum		    	"Bad Luftfeuchte"		    [stateTopic="tele/Sensors/Bad/Humidity"]
+        Type number : bad_bat		    	"Bad Batterie"	    	    [stateTopic="tele/Sensors/Bad/BatteryPercentage"]
+        // Werkstatt
+        Type number : werkstatt_temp		"Werkstatt Temperatur"	    [stateTopic="tele/Sensors/Werkstatt/Temperature"]
+        Type number : werkstatt_hum			"Werkstatt Luftfeuchte" 	[stateTopic="tele/Sensors/Werkstatt/Humidity"]
+        Type number : werkstatt_bat			"Werkstatt Batterie"	    [stateTopic="tele/Sensors/Werkstatt/BatteryPercentage"]
+        // Hof
+        Type number : hof_temp		    	"Hof Temperatur"	        [stateTopic="tele/Sensors/Hof/Temperature"]
+        Type number : hof_hum		    	"Hof Luftfeuchte"	        [stateTopic="tele/Sensors/Hof/Humidity"]
+        Type number : hof_bat			    "Hof Batterie"		        [stateTopic="tele/Sensors/Hof/BatteryPercentage"]                                        
+        //Others
+        Type number : bewegungsmelder_occupancy "Bewegungsmelder status"    [stateTopic="tele/Sensors/Bewegungsmelder/occupancy"]
+        Type number : bewegungsmelder_bat       "Bewegungsmelder Batterie"  [stateTopic="tele/Sensors/Bewegungsmelder/BatteryPercentage"]
+    }
+}

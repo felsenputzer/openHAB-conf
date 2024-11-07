@@ -1,0 +1,11 @@
+rule "Bewegungsmelder"
+when 
+    Item RHT_Sensors_bewegungsmelder_status changed
+then
+    val telegramAction = getActions("telegram","telegram:telegramBot:32ae44f7af")
+    if( RHT_Sensors_bewegungsmelder_status.state == 1 ) {
+        telegramAction.sendTelegram("Jemand ist in der Werkstatt!")
+    }else if(RHT_Sensors_bewegungsmelder_status.state == 0) {
+        telegramAction.sendTelegram("Ahhh... reine Luft....Die Luft ist hier so rein!")
+    }
+end
